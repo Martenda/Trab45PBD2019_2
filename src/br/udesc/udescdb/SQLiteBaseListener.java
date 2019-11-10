@@ -2,6 +2,11 @@ package br.udesc.udescdb;
 
 // Generated from SQLite.g4 by ANTLR 4.7.2
 
+import comandos_sql.CreateTableSQL;
+import comandos_sql.InsertSQL;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -263,7 +268,30 @@ public class SQLiteBaseListener implements SQLiteListener {
 	 */
 	@Override
 	public void enterCreate_table_stmt(SQLiteParser.Create_table_stmtContext ctx) {
-		System.out.println("Comando create table do Martenda");
+            try {
+                System.out.println("BLA");
+                System.out.println(ctx.column_def().get(0).column_name().getText());
+                System.out.println(ctx.column_def().get(0).type_name().getText());
+                System.out.println(ctx.column_def().get(1).column_name().getText());
+                System.out.println(ctx.column_def().get(1).type_name().getText());
+                System.out.println("FIM DO BLA");
+                
+                String[] nomesColunas = new String[ctx.column_def().size()];
+                String[] tiposColunas = new String[ctx.column_def().size()];
+                
+                for (int i = 0; i < ctx.column_def().size(); i++) {
+                    nomesColunas[i] = ctx.column_def().get(i).getText();
+                    tiposColunas[i] = ctx.column_def().get(i).type_name().getText();
+                    
+                    System.out.println(ctx.column_def().get(i).column_name());
+                    System.out.println(ctx.column_def().get(i).type_name().getText());
+//                    System.out.println(ctx.column_def().get(i).);
+                }
+                
+                CreateTableSQL.CreateTable((ctx.database_name() != null) ? ctx.database_name().getText() + "\\" : "", ctx.table_name().getText(), nomesColunas, tiposColunas);
+            } catch (IOException ex) {
+                Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	/**
@@ -528,7 +556,11 @@ public class SQLiteBaseListener implements SQLiteListener {
 	 */
 	@Override
 	public void enterInsert_stmt(SQLiteParser.Insert_stmtContext ctx) {
-		System.out.println("Comando insert");
+            try {
+                InsertSQL.Insert((ctx.database_name() != null) ? ctx.database_name().getText() + "\\" : "", ctx.table_name().getText());
+            } catch (IOException ex) {
+                Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	/**
@@ -1866,4 +1898,6 @@ public class SQLiteBaseListener implements SQLiteListener {
 	@Override
 	public void visitErrorNode(ErrorNode node) {
 	}
+        
+        
 }

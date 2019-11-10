@@ -22,10 +22,6 @@ import org.antlr.v4.runtime.RecognitionException;
 public abstract class ExeuctarSQL {
     
     public static boolean Executar(String sql) {
-//        sql = "create table xpto (col1 int, col2 char(20), col3 float)";
-//        sql = "insert into xpto (col1, col2) values (1, 'abc')";
-//        sql = "select * from xpto";
-
         CodePointCharStream inputStream = CharStreams.fromString(sql);
         SQLiteLexer lexer = new SQLiteLexer(inputStream);
         CommonTokenStream cts = new CommonTokenStream(lexer);
@@ -43,8 +39,6 @@ public abstract class ExeuctarSQL {
         };
 
         // agora vamos pegar as informacoes que o listener capturou e processar o comando
-    
-        
         
         return true;
     }

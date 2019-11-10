@@ -1,3 +1,6 @@
+
+import comandos_sql.CreateDataBaseSQL;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +18,12 @@ public class FramePrincipal extends javax.swing.JFrame {
      */
     public FramePrincipal() {
         initComponents();
+        
+        txtpnSQLEditor.setText(        
+        "create table abc.xpto (col1 int, col2 char(20), col3 float)"
+//        "insert into xpto (col1, col2) values (1, 'abc')"
+//        "select * from xpto"
+        );
     }
 
     /**
@@ -33,6 +42,9 @@ public class FramePrincipal extends javax.swing.JFrame {
         pnlControls = new javax.swing.JPanel();
         lblRowsAffected = new javax.swing.JLabel();
         btnRunSQL = new javax.swing.JButton();
+        btnCreateDataBase = new javax.swing.JButton();
+        edtNomeBase = new javax.swing.JTextField();
+        lblNomeBase = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName(""); // NOI18N
@@ -68,24 +80,43 @@ public class FramePrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnCreateDataBase.setText("Create DataBase");
+        btnCreateDataBase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateDataBaseActionPerformed(evt);
+            }
+        });
+
+        lblNomeBase.setText("Nome do Banco de Dados");
+        lblNomeBase.setName(""); // NOI18N
+
         javax.swing.GroupLayout pnlControlsLayout = new javax.swing.GroupLayout(pnlControls);
         pnlControls.setLayout(pnlControlsLayout);
         pnlControlsLayout.setHorizontalGroup(
             pnlControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlControlsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnRunSQL, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(btnRunSQL, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(lblRowsAffected)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblNomeBase)
+                .addGap(10, 10, 10)
+                .addComponent(edtNomeBase, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btnCreateDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         pnlControlsLayout.setVerticalGroup(
             pnlControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlControlsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRunSQL, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(lblRowsAffected))
+                    .addComponent(btnRunSQL, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRowsAffected)
+                    .addComponent(btnCreateDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtNomeBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNomeBase))
                 .addContainerGap())
         );
 
@@ -110,7 +141,7 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addComponent(pnlControls, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -118,14 +149,22 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRunSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunSQLActionPerformed
-        boolean ExecutouSQL = ExeuctarSQL.Executar(txtpnSQLEditor.getText());
-        
-        if (ExecutouSQL) {
-            
+        if (ExeuctarSQL.Executar(txtpnSQLEditor.getText())) {
+            System.out.println("SUCESSO - SQL executado com sucesso");
         } else {
-            
+            System.out.println("ERRO - Não foi possível executar o comando SQL");
+            //Exibir mensagem de erro ("Não foi possível executar o comando SQL")
         }
     }//GEN-LAST:event_btnRunSQLActionPerformed
+
+    private void btnCreateDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateDataBaseActionPerformed
+        if (CreateDataBaseSQL.CreateDataBase(edtNomeBase.getText())) {
+            System.out.println("SUCESSO - Base de Dados criada com sucesso");
+        } else {
+            System.out.println("ERRO - Não foi possível criar o Banco de Dados");
+            //Exibir mensagem de erro ("Não foi possível criar o Banco de Dados")
+        }        
+    }//GEN-LAST:event_btnCreateDataBaseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,9 +202,12 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreateDataBase;
     private javax.swing.JButton btnRunSQL;
+    private javax.swing.JTextField edtNomeBase;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblNomeBase;
     private javax.swing.JLabel lblRowsAffected;
     private javax.swing.JPanel pnlControls;
     private javax.swing.JTable tblSQLResults;
