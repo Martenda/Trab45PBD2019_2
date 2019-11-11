@@ -1,5 +1,6 @@
 
 import comandos_sql.CreateDataBaseSQL;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,7 +21,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         initComponents();
         
         txtpnSQLEditor.setText(        
-//        "create table abc.xpto (xa int, xb char(20), xc float)"
+        "create table abc.xpto (xa int, xb char(20), xc float)" + "\n" +
         "insert into abc.xpto (xa, xb) values (1, 'abc')"
 //        "select * from abc.xpto"
         );
@@ -150,18 +151,18 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private void btnRunSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunSQLActionPerformed
         if (ExecutarSQL.Executar(txtpnSQLEditor.getText())) {
-            System.out.println("SUCESSO - SQL executado com sucesso");
+            JOptionPane.showMessageDialog(null, "SUCESSO - SQL executado com sucesso");
         } else {
-            System.out.println("ERRO - Não foi possível executar o comando SQL");
+            JOptionPane.showMessageDialog(null, "ERRO - Não foi possível executar o comando SQL");
             //Exibir mensagem de erro ("Não foi possível executar o comando SQL")
         }
     }//GEN-LAST:event_btnRunSQLActionPerformed
 
     private void btnCreateDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateDataBaseActionPerformed
         if (CreateDataBaseSQL.CreateDataBase(edtNomeBase.getText())) {
-            System.out.println("SUCESSO - Base de Dados criada com sucesso");
+            JOptionPane.showMessageDialog(null, "SUCESSO - Base de Dados criada com sucesso");
         } else {
-            System.out.println("ERRO - Não foi possível criar o Banco de Dados");
+            JOptionPane.showMessageDialog(null, "ERRO - Não foi possível criar o Banco de Dados");
             //Exibir mensagem de erro ("Não foi possível criar o Banco de Dados")
         }        
     }//GEN-LAST:event_btnCreateDataBaseActionPerformed
