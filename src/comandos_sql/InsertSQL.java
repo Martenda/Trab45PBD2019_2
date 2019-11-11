@@ -150,8 +150,8 @@ public abstract class InsertSQL {
                 for (int i = 0; i < espacosFaltando; i++) {
                     valorColunaInserir += " ";
                 }
-                
-                //Insert - Escrevendo o valor no campo
+                 
+               //Insert - Escrevendo o valor no campo
                 raf.write(valorColunaInserir.getBytes(), 0, tamanhoColuna);
             }
         }
