@@ -19,7 +19,7 @@ import org.antlr.v4.runtime.RecognitionException;
  *
  * @author Lucas Martendal
  */
-public abstract class ExeuctarSQL {
+public abstract class ExecutarSQL {
     
     public static boolean Executar(String sql) {
         CodePointCharStream inputStream = CharStreams.fromString(sql);

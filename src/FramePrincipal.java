@@ -20,9 +20,9 @@ public class FramePrincipal extends javax.swing.JFrame {
         initComponents();
         
         txtpnSQLEditor.setText(        
-        "create table abc.xpto (col1 int, col2 char(20), col3 float)"
-//        "insert into xpto (col1, col2) values (1, 'abc')"
-//        "select * from xpto"
+//        "create table abc.xpto (xa int, xb char(20), xc float)"
+        "insert into abc.xpto (xa, xb) values (1, 'abc')"
+//        "select * from abc.xpto"
         );
     }
 
@@ -149,7 +149,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRunSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunSQLActionPerformed
-        if (ExeuctarSQL.Executar(txtpnSQLEditor.getText())) {
+        if (ExecutarSQL.Executar(txtpnSQLEditor.getText())) {
             System.out.println("SUCESSO - SQL executado com sucesso");
         } else {
             System.out.println("ERRO - Não foi possível executar o comando SQL");

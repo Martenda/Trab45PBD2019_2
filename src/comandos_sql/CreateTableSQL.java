@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
+import jdk.nashorn.internal.objects.NativeString;
 
 /**
  *
@@ -52,25 +53,43 @@ public abstract class CreateTableSQL {
         Path caminhoArquivo = Files.createFile(Paths.get(nomeBase + nomeTabela + ".dat"));
         
         //Create Table - Formatando os nomes e tipos das Colunas para gravar nos metadados
-        String nomesColunasConcat = null;
-        String tiposColunasConcat = null;
+        String nomesColunasConcat = "";
+        String tiposColunasConcat = "";
+        int TAMREG = 0;
         
         for (int i = 0; i < nomesColunas.length; i++) {
-            nomesColunasConcat += nomesColunasConcat + ";" + nomesColunas[i];
-            tiposColunasConcat += tiposColunasConcat + ";" + tiposColunas[i];
+            nomesColunasConcat += nomesColunas[i] + ";";
+            tiposColunasConcat += tiposColunas[i] + ";";
+            
+            //Create Table - Calculando o Tamanho do Registro (TAMREG), conforme o total do tamanho das Colunas
+            TAMREG += CalculaTamanhoColuna(tiposColunas[i]);
         }
-        
-        //Create Table - Calculando o Tamanho do Registro (TAMREG), conforme o total do tamanho das Colunas
-        int TAMREG = 7;
+        System.out.println(nomesColunasConcat);
+        System.out.println(tiposColunasConcat);
         
         //Create Table - Escrevendo os atributos (metadatas) no arquivo da Tabela (nome das Colunas, TamReg, etc...)
-        UserDefinedFileAttributeView view = Files.getFileAttributeView(caminhoArquivo, UserDefinedFileAttributeView.class);
+        UserDefinedFileAttributeView view = Files.getFileAttributeView(caminhoArquivo,
+                UserDefinedFileAttributeView.class);
         view.write("TamanhoRegistro", Charset.defaultCharset().encode(String.valueOf(TAMREG)));
         view.write("NomesColunas", Charset.defaultCharset().encode(nomesColunasConcat));
         view.write("TiposColunas", Charset.defaultCharset().encode(tiposColunasConcat));
-        view.write("TamanhosColunas", Charset.defaultCharset().encode(""));
         
         return true;
+    }
+    
+    public static int CalculaTamanhoColuna(String tipoColuna) {
+        //Int = 4
+        //Double = 8
+        //Char(nn) = Tamanho especificado
+        if (tipoColuna.equalsIgnoreCase("int")) {
+            return 4;
+        } else {
+            if (tipoColuna.equalsIgnoreCase("float")) {
+                return 8;
+            } else {
+                return Integer.parseInt(tipoColuna.replaceAll("\\D+", ""));
+            }
+        }
     }
         
 }

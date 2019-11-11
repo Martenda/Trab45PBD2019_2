@@ -2,6 +2,7 @@ package br.udesc.udescdb;
 
 // Generated from SQLite.g4 by ANTLR 4.7.2
 
+import com.sun.org.apache.xpath.internal.operations.Variable;
 import comandos_sql.CreateTableSQL;
 import comandos_sql.InsertSQL;
 import java.io.IOException;
@@ -268,27 +269,22 @@ public class SQLiteBaseListener implements SQLiteListener {
 	 */
 	@Override
 	public void enterCreate_table_stmt(SQLiteParser.Create_table_stmtContext ctx) {
-            try {
-                System.out.println("BLA");
-                System.out.println(ctx.column_def().get(0).column_name().getText());
-                System.out.println(ctx.column_def().get(0).type_name().getText());
-                System.out.println(ctx.column_def().get(1).column_name().getText());
-                System.out.println(ctx.column_def().get(1).type_name().getText());
-                System.out.println("FIM DO BLA");
-                
+            try {                
                 String[] nomesColunas = new String[ctx.column_def().size()];
                 String[] tiposColunas = new String[ctx.column_def().size()];
                 
+//                System.out.println("TESTES 1");
                 for (int i = 0; i < ctx.column_def().size(); i++) {
-                    nomesColunas[i] = ctx.column_def().get(i).getText();
+                    nomesColunas[i] = ctx.column_def().get(i).column_name().getText();
                     tiposColunas[i] = ctx.column_def().get(i).type_name().getText();
                     
-                    System.out.println(ctx.column_def().get(i).column_name());
-                    System.out.println(ctx.column_def().get(i).type_name().getText());
-//                    System.out.println(ctx.column_def().get(i).);
+//                    System.out.println(nomesColunas[i]);
+//                    System.out.println(tiposColunas[i]);
                 }
+//                System.out.println("FIM TESTES 1");
                 
-                CreateTableSQL.CreateTable((ctx.database_name() != null) ? ctx.database_name().getText() + "\\" : "", ctx.table_name().getText(), nomesColunas, tiposColunas);
+                CreateTableSQL.CreateTable((ctx.database_name() != null) ? ctx.database_name().getText() + "\\" : "",
+                        ctx.table_name().getText(), nomesColunas, tiposColunas);
             } catch (IOException ex) {
                 Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -557,7 +553,29 @@ public class SQLiteBaseListener implements SQLiteListener {
 	@Override
 	public void enterInsert_stmt(SQLiteParser.Insert_stmtContext ctx) {
             try {
-                InsertSQL.Insert((ctx.database_name() != null) ? ctx.database_name().getText() + "\\" : "", ctx.table_name().getText());
+                System.out.println("TESTES 3");
+//                System.out.println(ctx.column_name().get(0).getText());
+//                System.out.println(ctx.expr(0).getText());
+//                System.out.println(ctx.expr(0).literal_value().getText());
+//                System.out.println(ctx.column_name().get(1).getText());
+//                System.out.println(ctx.expr(1).getText());
+//                System.out.println(ctx.expr(1).literal_value().getText());
+                
+                String[] nomesColunasInserir = new String[ctx.column_name().size()];
+                String[] tiposColunasInserir = new String[ctx.column_name().size()];
+                
+                for (int i = 0; i < ctx.column_name().size(); i++) {
+                    nomesColunasInserir[i] = ctx.column_name().get(i).getText();
+                    tiposColunasInserir[i] = ctx.expr(i).getText();
+                    
+                    System.out.println(nomesColunasInserir[i]);
+                    System.out.println(tiposColunasInserir[i]);
+                }
+                
+                System.out.println("FIM TESTES 3");
+                
+                InsertSQL.Insert((ctx.database_name() != null) ? ctx.database_name().getText() + "\\" : "",
+                        ctx.table_name().getText(), nomesColunasInserir, tiposColunasInserir);
             } catch (IOException ex) {
                 Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
             }
