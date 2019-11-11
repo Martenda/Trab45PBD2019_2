@@ -22,7 +22,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         
         txtpnSQLEditor.setText(        
         "create table abc.xpto (xa int, xb char(20), xc float)" + "\n" +
-        "insert into abc.xpto (xa, xb) values (1, 'abc')"
+        "insert into abc.xpto (xa, xb, xc) values (1, 'abc', 10,20)"
 //        "select * from abc.xpto"
         );
     }
@@ -46,6 +46,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         btnCreateDataBase = new javax.swing.JButton();
         edtNomeBase = new javax.swing.JTextField();
         lblNomeBase = new javax.swing.JLabel();
+        btXml = new javax.swing.JButton();
+        edtXml = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName(""); // NOI18N
@@ -110,8 +112,8 @@ public class FramePrincipal extends javax.swing.JFrame {
         );
         pnlControlsLayout.setVerticalGroup(
             pnlControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlControlsLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(pnlControlsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRunSQL, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRowsAffected)
@@ -120,6 +122,20 @@ public class FramePrincipal extends javax.swing.JFrame {
                     .addComponent(lblNomeBase))
                 .addContainerGap())
         );
+
+        btXml.setText("Inserir xml");
+        btXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btXmlActionPerformed(evt);
+            }
+        });
+
+        edtXml.setText("Insira aqui o caminho do arquivo xml");
+        edtXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edtXmlActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,13 +148,23 @@ public class FramePrincipal extends javax.swing.JFrame {
                     .addComponent(pnlControls, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1162, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(edtXml, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btXml, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btXml, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtXml))
+                .addGap(55, 55, 55)
                 .addComponent(pnlControls, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,6 +192,20 @@ public class FramePrincipal extends javax.swing.JFrame {
             //Exibir mensagem de erro ("Não foi possível criar o Banco de Dados")
         }        
     }//GEN-LAST:event_btnCreateDataBaseActionPerformed
+
+    private void btXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btXmlActionPerformed
+        if (ExecutarXML.Executar(edtXml.getText())) {
+            JOptionPane.showMessageDialog(null, "SUCESSO - XML executado com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "ERRO - Não foi possível executar comandos do XML, verifique se o arquivo"
+                    + " se encontra no caminho especificado.");
+            //Exibir mensagem de erro ("Não foi possível executar o comando SQL")
+        }
+    }//GEN-LAST:event_btXmlActionPerformed
+
+    private void edtXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtXmlActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edtXmlActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,9 +243,11 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btXml;
     private javax.swing.JButton btnCreateDataBase;
     private javax.swing.JButton btnRunSQL;
     private javax.swing.JTextField edtNomeBase;
+    private javax.swing.JTextField edtXml;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblNomeBase;
