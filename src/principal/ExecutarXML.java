@@ -70,11 +70,7 @@ public class ExecutarXML {
                             //Coloca os valores das colunas nos Arrays anteriores
                             adicionaElementoEmColuna(columns, colunasNome, colunasValor);
                             //Caso todos os valores estejam corretos, insere-os na tabela
-                            if (InsertSQL.Insert(nomeDb, nomeTb, colunasNome, colunasValor)) {
-                                return true;
-                            } else {
-                                return false;
-                            }
+                            return InsertSQL.Insert(nomeDb, nomeTb, colunasNome, colunasValor);
                         }
                     }
                 }

@@ -23,10 +23,9 @@ public class FramePrincipal extends javax.swing.JFrame {
         initComponents();
         
         txtpnSQLEditor.setText(        
-//            "create table abc.xpto (xa int, xb char(20), xc float);"
-//            "insert into abc.xpto (xa, xb) values (1, 'abc');"
-//            "select * from abc.xpto;"
-            ""
+            "create table abc.xpto (xa int, xb char(20), xc float);\n" +
+            "insert into abc.xpto (xa, xb) values (1, 'abc');\n" +
+            "select * from abc.xpto;"
         );
     }
 

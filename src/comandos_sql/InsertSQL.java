@@ -35,7 +35,7 @@ public abstract class InsertSQL {
         }
         
         //Insert - Verificando se a Tabela existe
-        File diretorio = new File(nomeBase + nomeTabela + ".dat");
+        File diretorio = new File(nomeBase + File.separator + nomeTabela + ".dat");
         if (!diretorio.exists()) {
             System.out.println("ERRO - Essa Tabela não existe");
             //Mensagem de erro ("Essa Tabela não existe")
@@ -43,11 +43,11 @@ public abstract class InsertSQL {
         }
         
         //Insert - Criando o raf do arquivo da Tabela
-        RandomAccessFile raf = new RandomAccessFile(nomeBase + nomeTabela + ".dat", "rw");
+        RandomAccessFile raf = new RandomAccessFile(nomeBase + File.separator + nomeTabela + ".dat", "rw");
         
         //Insert - Lendo os MetaDados do arquivo
 //        System.out.println(view.list().get(0));
-        Path caminhoArquivo = Paths.get(nomeBase + nomeTabela + ".dat");
+        Path caminhoArquivo = Paths.get(nomeBase + File.separator + nomeTabela + ".dat");
         UserDefinedFileAttributeView view = Files.getFileAttributeView(caminhoArquivo,
                 UserDefinedFileAttributeView.class);
         ByteBuffer buf;
