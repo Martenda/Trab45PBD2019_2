@@ -5,9 +5,11 @@ package br.udesc.udescdb;
 import com.sun.org.apache.xpath.internal.operations.Variable;
 import comandos_sql.CreateTableSQL;
 import comandos_sql.InsertSQL;
+import comandos_sql.SelectSQL;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -18,7 +20,14 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * the available methods.
  */
 public class SQLiteBaseListener implements SQLiteListener {
-	/**
+        
+        public JTable tblSQLResults;
+    
+        public SQLiteBaseListener(JTable tblSQLResults) {
+            this.tblSQLResults = tblSQLResults;
+        }
+    
+        /**
 	 * {@inheritDoc}
 	 *
 	 * <p>
@@ -273,15 +282,10 @@ public class SQLiteBaseListener implements SQLiteListener {
                 String[] nomesColunas = new String[ctx.column_def().size()];
                 String[] tiposColunas = new String[ctx.column_def().size()];
                 
-//                System.out.println("TESTES 1");
                 for (int i = 0; i < ctx.column_def().size(); i++) {
                     nomesColunas[i] = ctx.column_def().get(i).column_name().getText();
                     tiposColunas[i] = ctx.column_def().get(i).type_name().getText();
-                    
-//                    System.out.println(nomesColunas[i]);
-//                    System.out.println(tiposColunas[i]);
                 }
-//                System.out.println("FIM TESTES 1");
                 
                 CreateTableSQL.CreateTable((ctx.database_name() != null) ? ctx.database_name().getText() + "\\" : "",
                         ctx.table_name().getText(), nomesColunas, tiposColunas);
@@ -552,27 +556,14 @@ public class SQLiteBaseListener implements SQLiteListener {
 	 */
 	@Override
 	public void enterInsert_stmt(SQLiteParser.Insert_stmtContext ctx) {
-            try {
-                System.out.println("TESTES 3");
-//                System.out.println(ctx.column_name().get(0).getText());
-//                System.out.println(ctx.expr(0).getText());
-//                System.out.println(ctx.expr(0).literal_value().getText());
-//                System.out.println(ctx.column_name().get(1).getText());
-//                System.out.println(ctx.expr(1).getText());
-//                System.out.println(ctx.expr(1).literal_value().getText());
-                
+            try {                
                 String[] nomesColunasInserir = new String[ctx.column_name().size()];
                 String[] tiposColunasInserir = new String[ctx.column_name().size()];
                 
                 for (int i = 0; i < ctx.column_name().size(); i++) {
                     nomesColunasInserir[i] = ctx.column_name().get(i).getText();
                     tiposColunasInserir[i] = ctx.expr(i).getText();
-                    
-                    System.out.println(nomesColunasInserir[i]);
-                    System.out.println(tiposColunasInserir[i]);
                 }
-                
-                System.out.println("FIM TESTES 3");
                 
                 InsertSQL.Insert((ctx.database_name() != null) ? ctx.database_name().getText() + "\\" : "",
                         ctx.table_name().getText(), nomesColunasInserir, tiposColunasInserir);
@@ -1262,7 +1253,12 @@ public class SQLiteBaseListener implements SQLiteListener {
 	 */
 	@Override
 	public void enterSelect_core(SQLiteParser.Select_coreContext ctx) {
-		System.out.println("Comando select");
+            try {
+                SelectSQL.Select((ctx.table_or_subquery(0).database_name() != null) ? ctx.table_or_subquery(0).database_name().getText() + "\\" : "",
+                        ctx.table_or_subquery(0).table_name().getText(), tblSQLResults);
+            } catch (IOException ex) {
+                Logger.getLogger(SQLiteBaseListener.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	/**

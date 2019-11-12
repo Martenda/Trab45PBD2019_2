@@ -1,3 +1,5 @@
+package principal;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,6 +15,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import br.udesc.udescdb.SQLiteBaseListener;
 import br.udesc.udescdb.SQLiteLexer;
 import br.udesc.udescdb.SQLiteParser;
+import javax.swing.JTable;
 import org.antlr.v4.runtime.RecognitionException;
 
 /**
@@ -21,7 +24,9 @@ import org.antlr.v4.runtime.RecognitionException;
  */
 public abstract class ExecutarSQL {
     
-    public static boolean Executar(String sql) {
+    public static JTable tblSQLResults;
+    
+    public static boolean Executar(String sql, JTable tblSQLResults) {
         CodePointCharStream inputStream = CharStreams.fromString(sql);
         SQLiteLexer lexer = new SQLiteLexer(inputStream);
         CommonTokenStream cts = new CommonTokenStream(lexer);
@@ -32,7 +37,7 @@ public abstract class ExecutarSQL {
             ParseTree tree = parser.parse();
 
             ParseTreeWalker ptw = new ParseTreeWalker();        
-            ptw.walk(new SQLiteBaseListener(), tree);
+            ptw.walk(new SQLiteBaseListener(tblSQLResults), tree);
             
         } catch (RecognitionException e) {
             return false;

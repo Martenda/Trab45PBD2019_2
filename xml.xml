@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inserts>
+    <db name="abc">
+        <table name="xpto">
+            <column>
+                <name>xa</name>
+                <value>1</value>
+            </column>
+            <column>
+                <name>xb</name>
+                <value>'oi'</value>
+            </column>
+            <column>
+                <name>xc</name>
+                <value>210.10</value>
+            </column>
+        </table>
+    </db>
+</inserts>

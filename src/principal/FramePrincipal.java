@@ -1,5 +1,8 @@
+package principal;
 
 import comandos_sql.CreateDataBaseSQL;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableColumn;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,9 +23,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         initComponents();
         
         txtpnSQLEditor.setText(        
-//        "create table abc.xpto (xa int, xb char(20), xc float)"
-        "insert into abc.xpto (xa, xb) values (1, 'abc')"
-//        "select * from abc.xpto"
+//            "create table abc.xpto (xa int, xb char(20), xc float);"
+//            "insert into abc.xpto (xa, xb) values (1, 'abc');"
+//            "select * from abc.xpto;"
+            ""
         );
     }
 
@@ -40,11 +44,12 @@ public class FramePrincipal extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblSQLResults = new javax.swing.JTable();
         pnlControls = new javax.swing.JPanel();
-        lblRowsAffected = new javax.swing.JLabel();
         btnRunSQL = new javax.swing.JButton();
         btnCreateDataBase = new javax.swing.JButton();
         edtNomeBase = new javax.swing.JTextField();
         lblNomeBase = new javax.swing.JLabel();
+        edtXml = new javax.swing.JTextField();
+        btXml = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName(""); // NOI18N
@@ -54,10 +59,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         tblSQLResults.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
 
@@ -68,9 +70,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tblSQLResults);
 
         pnlControls.setName(""); // NOI18N
-
-        lblRowsAffected.setText("Linhas Afetadas:");
-        lblRowsAffected.setName(""); // NOI18N
 
         btnRunSQL.setText("Executar");
         btnRunSQL.setName(""); // NOI18N
@@ -90,6 +89,20 @@ public class FramePrincipal extends javax.swing.JFrame {
         lblNomeBase.setText("Nome do Banco de Dados");
         lblNomeBase.setName(""); // NOI18N
 
+        edtXml.setText("Insira aqui o caminho do arquivo xml para inserir");
+        edtXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edtXmlActionPerformed(evt);
+            }
+        });
+
+        btXml.setText("Inserir xml");
+        btXml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btXmlActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlControlsLayout = new javax.swing.GroupLayout(pnlControls);
         pnlControls.setLayout(pnlControlsLayout);
         pnlControlsLayout.setHorizontalGroup(
@@ -97,9 +110,11 @@ public class FramePrincipal extends javax.swing.JFrame {
             .addGroup(pnlControlsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnRunSQL, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(lblRowsAffected)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(edtXml, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btXml, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
                 .addComponent(lblNomeBase)
                 .addGap(10, 10, 10)
                 .addComponent(edtNomeBase, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,10 +128,12 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRunSQL, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRowsAffected)
                     .addComponent(btnCreateDataBase, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtNomeBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNomeBase))
+                    .addComponent(lblNomeBase)
+                    .addGroup(pnlControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btXml, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(edtXml)))
                 .addContainerGap())
         );
 
@@ -149,7 +166,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRunSQLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunSQLActionPerformed
-        if (ExecutarSQL.Executar(txtpnSQLEditor.getText())) {
+        if (ExecutarSQL.Executar(txtpnSQLEditor.getText(), tblSQLResults)) {
             System.out.println("SUCESSO - SQL executado com sucesso");
         } else {
             System.out.println("ERRO - Não foi possível executar o comando SQL");
@@ -165,6 +182,20 @@ public class FramePrincipal extends javax.swing.JFrame {
             //Exibir mensagem de erro ("Não foi possível criar o Banco de Dados")
         }        
     }//GEN-LAST:event_btnCreateDataBaseActionPerformed
+
+    private void edtXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtXmlActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edtXmlActionPerformed
+
+    private void btXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btXmlActionPerformed
+        if (ExecutarXML.Executar(edtXml.getText())) {
+            JOptionPane.showMessageDialog(null, "SUCESSO - XML executado com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "ERRO - Não foi possível executar comandos do XML, verifique se o arquivo"
+                    + " se encontra no caminho especificado.");
+            //Exibir mensagem de erro ("Não foi possível executar o comando SQL")
+        }
+    }//GEN-LAST:event_btXmlActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,13 +233,14 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btXml;
     private javax.swing.JButton btnCreateDataBase;
     private javax.swing.JButton btnRunSQL;
     private javax.swing.JTextField edtNomeBase;
+    private javax.swing.JTextField edtXml;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblNomeBase;
-    private javax.swing.JLabel lblRowsAffected;
     private javax.swing.JPanel pnlControls;
     private javax.swing.JTable tblSQLResults;
     private javax.swing.JTextPane txtpnSQLEditor;

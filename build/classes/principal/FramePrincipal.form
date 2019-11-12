@@ -74,7 +74,7 @@
         <Component class="javax.swing.JTable" name="tblSQLResults">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="0" rowCount="4"/>
+              <Table columnCount="0" rowCount="0"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Cursor Padr&#xe3;o"/>
@@ -98,9 +98,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnRunSQL" min="-2" pref="150" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="lblRowsAffected" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="edtXml" min="-2" pref="323" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btXml" min="-2" pref="144" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Component id="lblNomeBase" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="edtNomeBase" min="-2" pref="132" max="-2" attributes="0"/>
@@ -116,10 +118,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnRunSQL" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="lblRowsAffected" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnCreateDataBase" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="edtNomeBase" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblNomeBase" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                          <Component id="btXml" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="edtXml" alignment="3" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -127,12 +132,6 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lblRowsAffected">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Linhas Afetadas:"/>
-            <Property name="name" type="java.lang.String" value="" noResource="true"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JButton" name="btnRunSQL">
           <Properties>
             <Property name="text" type="java.lang.String" value="Executar"/>
@@ -157,6 +156,22 @@
             <Property name="text" type="java.lang.String" value="Nome do Banco de Dados"/>
             <Property name="name" type="java.lang.String" value="" noResource="true"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="edtXml">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Insira aqui o caminho do arquivo xml para inserir"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="edtXmlActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btXml">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Inserir xml"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btXmlActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
