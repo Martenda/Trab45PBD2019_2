@@ -130,7 +130,7 @@ public class FramePrincipal extends javax.swing.JFrame {
             }
         });
 
-        edtXml.setText("Insira aqui o caminho do arquivo xml");
+        edtXml.setText("Insira aqui o caminho do arquivo xml para inserir");
         edtXml.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edtXmlActionPerformed(evt);

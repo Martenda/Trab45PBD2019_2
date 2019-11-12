@@ -182,7 +182,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="edtXml">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Insira aqui o caminho do arquivo xml"/>
+        <Property name="text" type="java.lang.String" value="Insira aqui o caminho do arquivo xml para inserir"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="edtXmlActionPerformed"/>

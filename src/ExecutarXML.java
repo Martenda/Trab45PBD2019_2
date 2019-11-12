@@ -47,7 +47,7 @@ public class ExecutarXML {
             NodeList dbs = doc.getElementsByTagName("db");
             for (int i = 0; i < dbs.getLength(); i++) {
                 Node db = dbs.item(i);
-                
+
                 if (db.getNodeType() == Node.ELEMENT_NODE) {
                     Element dbEle = (Element) db;
                     //guarda nome do banco à inserir
@@ -56,45 +56,52 @@ public class ExecutarXML {
                     NodeList tables = dbEle.getElementsByTagName("table");
                     for (int j = 0; j < tables.getLength(); j++) {
                         Node table = tables.item(j);
-                        
+
                         if (table.getNodeType() == Node.ELEMENT_NODE) {
                             Element tbEle = (Element) table;
                             //guarda nome da tabela à inserir
                             String nomeTb = tbEle.getAttribute("name");
-                            
+
                             NodeList columns = tbEle.getElementsByTagName("column");
                             String[] colunasNome = new String[columns.getLength()];
                             String[] colunasValor = new String[columns.getLength()];
-                            for (int k = 0; k < columns.getLength(); k++) {
-                                Node column = columns.item(k);
-                                if(column.getNodeType() == Node.ELEMENT_NODE) {
-                                    Element clEle = (Element) column;
-                                    //guarda nome da coluna à inserir
-                                    NodeList nodesColumn = clEle.getChildNodes();
-                                    for (int l = 0; l < nodesColumn.getLength(); l++) {
-                                        if (nodesColumn.item(l).getNodeType() == Node.ELEMENT_NODE) {
-                                            Element element = (Element) nodesColumn.item(l);
-                                            if (element.getTagName().equals("name")) {
-                                                colunasNome[k] = element.getTextContent();
-                                            } else if (element.getTagName().equals("value")) {
-                                                colunasValor[k] = element.getTextContent();
-                                            }
-                                        }
-                                    }
-                                }
+                            //Coloca os valores das colunas nos Arrays anteriores
+                            adicionaElementoEmColuna(columns, colunasNome, colunasValor);
+                            //Caso todos os valores estejam corretos, insere-os na tabela
+                            if (InsertSQL.Insert(nomeDb, nomeTb, colunasNome, colunasValor)) {
+                                return true;
+                            } else {
+                                return false;
                             }
-                            InsertSQL.Insert(nomeDb, nomeTb, colunasNome, colunasValor);
                         }
                     }
                 }
-
             }
-
         } catch (SAXException | IOException | ParserConfigurationException ex) {
             return false;
         }
+        return false;
+    }
 
-        return true;
+    private static void adicionaElementoEmColuna(NodeList columns, String[] colunasNome, String[] colunasValor) {
+        for (int k = 0; k < columns.getLength(); k++) {
+            Node column = columns.item(k);
+            if (column.getNodeType() == Node.ELEMENT_NODE) {
+                Element clEle = (Element) column;
+                NodeList nodesColumn = clEle.getChildNodes();
+                //Itera sobre os dois 'elementos' presentes na coluna (name, value)
+                for (int l = 0; l < nodesColumn.getLength(); l++) {
+                    if (nodesColumn.item(l).getNodeType() == Node.ELEMENT_NODE) {
+                        Element element = (Element) nodesColumn.item(l);
+                        if (element.getTagName().equals("name")) {
+                            colunasNome[k] = element.getTextContent();
+                        } else if (element.getTagName().equals("value")) {
+                            colunasValor[k] = element.getTextContent();
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
