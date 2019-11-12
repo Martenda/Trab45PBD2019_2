@@ -1,4 +1,5 @@
 
+import comandos_sql.InsertSQL;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -37,23 +38,58 @@ public class ExecutarXML {
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(new File(arq)));
             //Se passar por aqui o xml está correto!!
-            
+
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
 
             Document doc = builder.parse(arq);
 
-            NodeList inserts = doc.getElementsByTagName("db");
-            for (int i = 0; i < inserts.getLength(); i++) {
-                Node db = inserts.item(i);
+            NodeList dbs = doc.getElementsByTagName("db");
+            for (int i = 0; i < dbs.getLength(); i++) {
+                Node db = dbs.item(i);
                 
                 if (db.getNodeType() == Node.ELEMENT_NODE) {
-                    Element elementDb = (Element) db;
-                    
-                    System.out.println(elementDb.getAttribute("name"));
+                    Element dbEle = (Element) db;
+                    //guarda nome do banco à inserir
+                    String nomeDb = dbEle.getAttribute("name");
+
+                    NodeList tables = dbEle.getElementsByTagName("table");
+                    for (int j = 0; j < tables.getLength(); j++) {
+                        Node table = tables.item(j);
+                        
+                        if (table.getNodeType() == Node.ELEMENT_NODE) {
+                            Element tbEle = (Element) table;
+                            //guarda nome da tabela à inserir
+                            String nomeTb = tbEle.getAttribute("name");
+                            
+                            NodeList columns = tbEle.getElementsByTagName("column");
+                            String[] colunasNome = new String[columns.getLength()];
+                            String[] colunasValor = new String[columns.getLength()];
+                            for (int k = 0; k < columns.getLength(); k++) {
+                                Node column = columns.item(k);
+                                if(column.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element clEle = (Element) column;
+                                    //guarda nome da coluna à inserir
+                                    NodeList nodesColumn = clEle.getChildNodes();
+                                    for (int l = 0; l < nodesColumn.getLength(); l++) {
+                                        if (nodesColumn.item(l).getNodeType() == Node.ELEMENT_NODE) {
+                                            Element element = (Element) nodesColumn.item(l);
+                                            if (element.getTagName().equals("name")) {
+                                                colunasNome[k] = element.getTextContent();
+                                            } else if (element.getTagName().equals("value")) {
+                                                colunasValor[k] = element.getTextContent();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            InsertSQL.Insert(nomeDb, nomeTb, colunasNome, colunasValor);
+                        }
+                    }
                 }
+
             }
-            
+
         } catch (SAXException | IOException | ParserConfigurationException ex) {
             return false;
         }
